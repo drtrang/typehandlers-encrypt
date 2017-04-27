@@ -6,7 +6,19 @@
 该插件尽量保证对业务方透明，仅需少量配置即可实现指定字段的加解密操作。
 
 ## 依赖
+为了方便，该插件添加到了 `iprd-common`，版本号 `1.0.36-SNAPSHOT`，**需注意如果依赖于 `iprd-common`，下文中的 `typeHandlersPackage` 和 `typeAliasPackage` 配置均需要做相应改动。**
+
 ### Maven
+```xml
+<dependency>
+    <groupId>com.lianjia.iprd</groupId>
+    <artifactId>iprd-common</artifactId>
+    <version>1.0.36-SNAPSHOT</version>
+</dependency>
+```
+
+或
+
 ```xml
 <dependency>
     <groupId>com.github.drtrang</groupId>
@@ -49,8 +61,8 @@ public SqlSessionFactory sqlSessionFactory(Configuration config) {
 ```yaml
 ##application.yml
 mybatis:
-  type-aliases-package: xxx.domain;com.github.drtrang.typehandlers.alias
-  type-handlers-package: com.github.drtrang.typehandlers.type
+    type-aliases-package: xxx.domain;com.github.drtrang.typehandlers.alias
+    type-handlers-package: com.github.drtrang.typehandlers.type
 ```
 
 以上配置任选其一即可，请根据实际情况选择。
