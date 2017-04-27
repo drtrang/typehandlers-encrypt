@@ -1,74 +1,81 @@
-# MyBatis Type Handlers for JSR 310: Date and Time API
+#MyBatis Type Handlers for Encrypt
 
-[![Build Status](https://travis-ci.org/mybatis/typehandlers-jsr310.svg?branch=master)](https://travis-ci.org/mybatis/typehandlers-jsr310)
-[![Coverage Status](https://coveralls.io/repos/github/mybatis/typehandlers-jsr310/badge.svg?branch=master)](https://coveralls.io/github/mybatis/typehandlers-jsr310?branch=master)
-[![Dependency Status](https://www.versioneye.com/user/projects/56ef43cb35630e00388897bb/badge.svg?style=flat)](https://www.versioneye.com/user/projects/56ef43cb35630e00388897bb)
-[![Maven central](https://maven-badges.herokuapp.com/maven-central/org.mybatis/mybatis-typehandlers-jsr310/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.mybatis/mybatis-typehandlers-jsr310)
-[![License](http://img.shields.io/:license-apache-brightgreen.svg)](http://www.apache.org/licenses/LICENSE-2.0.html)
+##介绍
+应公司安全部门要求，需要对数据库敏感字段进行加密处理，我结合实际情况后开发出此插件，希望减小此需求对各业务方的影响，避免重复工作。
 
-![mybatis](http://mybatis.github.io/images/mybatis-logo.png)
+该插件尽量保证对业务方透明，仅需少量配置即可实现指定字段的加解密操作。
 
-The MyBatis type handlers supporting types introduced in JSR 310: Date and Time API.
-
-
-## Installation
-
-If you are using Maven add the following dependency to your `pom.xml`:
-
+##依赖
+###Maven
 ```xml
 <dependency>
-  <groupId>org.mybatis</groupId>
-  <artifactId>mybatis-typehandlers-jsr310</artifactId>
-  <version>1.0.2</version>
+    <groupId>com.github.drtrang</groupId>
+    <artifactId>typehandlers-encrypt</artifactId>
+    <version>1.0.1</version>
 </dependency>
 ```
 
-If you are using Gradle add the following dependency to your `build.gradle`:
-
+###Gradle
 ```groovy
-compile("org.mybatis:mybatis-typehandlers-jsr310:1.0.2")
+compile("com.github.drtrang:typehandlers-encrypt:1.0.1")
 ```
 
-## Configuration
-
-If you are using MyBatis 3.4 or later, you can simply add this artifact on your classpath and MyBatis will automatically register the provided type handlers.
-If you are using an older version, you need to add the type handlers to your `mybatis-config.xml` as follow:
-
+##使用方式
+###声明 EncryptTypeHandler
+####mybatis-config.xml
 ```xml
 <typeHandlers>
-  <!-- ... -->
-  <typeHandler handler="org.apache.ibatis.type.InstantTypeHandler" />
-  <typeHandler handler="org.apache.ibatis.type.LocalDateTimeTypeHandler" />
-  <typeHandler handler="org.apache.ibatis.type.LocalDateTypeHandler" />
-  <typeHandler handler="org.apache.ibatis.type.LocalTimeTypeHandler" />
-  <typeHandler handler="org.apache.ibatis.type.OffsetDateTimeTypeHandler" />
-  <typeHandler handler="org.apache.ibatis.type.OffsetTimeTypeHandler" />
-  <typeHandler handler="org.apache.ibatis.type.ZonedDateTimeTypeHandler" />
-  <typeHandler handler="org.apache.ibatis.type.YearTypeHandler" />
-  <typeHandler handler="org.apache.ibatis.type.MonthTypeHandler" />
-  <typeHandler handler="org.apache.ibatis.type.YearMonthTypeHandler" />
-  <typeHandler handler="org.apache.ibatis.type.JapaneseDateTypeHandler" />
+    <package name="com.github.drtrang.typehandlers.type" />
 </typeHandlers>
+
+<typeAliases>
+    <package name="com.github.drtrang.typehandlers.alias" />
+</typeAliases>
 ```
 
-## Supported types
+#### Spring 配置
+```java
+@Bean
+public SqlSessionFactory sqlSessionFactory(Configuration config) {
+    SqlSessionFactoryBean factory = new SqlSessionFactoryBean();
+    ...
+    factory.setTypeAliasesPackage("com.github.drtrang.typehandlers.alias;xxx.domain");
+    factory.setTypeHandlersPackage("com.github.drtrang.typehandlers.type");
+    return factory.getObject();
+}
+```
 
-The following type handlers are supported:
+####SpringBoot 配置
+```yaml
+##application.yml
+mybatis:
+  type-aliases-package: xxx.domain;com.github.drtrang.typehandlers.alias
+  type-handlers-package: com.github.drtrang.typehandlers.type
+```
 
-| Type handler |  Date and Time API type | JDBC types | Available<br>version |
-| ------------ | ----------------------- | ---------- | :------------------: | 
-| `InstantTypeHandler` | `java.time.Instant` | `TIMESTAMP` |  |
-| `LocalDateTimeTypeHandler` | `java.time.LocalDateTime` | `TIMESTAMP` |  |
-| `LocalDateTypeHandler` | `java.time.LocalDate` | `DATE` |  |
-| `LocalTimeTypeHandler` | `java.time.LocalTime` | `TIME` |  |
-| `OffsetDateTimeTypeHandler` | `java.time.OffsetDateTime` | `TIMESTAMP` |  |
-| `OffsetTimeTypeHandler` | `java.time.OffsetTime` | `TIME` |  |
-| `ZonedDateTimeTypeHandler` | `java.time.ZonedDateTime` | `TIMESTAMP` |  |
-| `YearTypeHandler` | `java.time.Year` | `INTEGER` | 1.0.1 |
-| `MonthTypeHandler` | `java.time.Month` | `INTEGER` | 1.0.1 |
-| `YearMonthTypeHandler` | `java.time.YearMonth` | `VARCHAR` or `LONGVARCHAR` | 1.0.2  |
-| `JapaneseDateTypeHandler` | `java.time.chrono.JapaneseDate` | `DATE` | 1.0.2 |
+以上配置任选其一即可，请根据实际情况选择。
 
-> **Note:**
->
-> For more details of type handler, please refer to "[MyBatis 3 REFERENCE DOCUMENTATION](http://www.mybatis.org/mybatis-3/configuration.html#typeHandlers)".
+###使用 EncryptTypeHandler
+```xml
+<!-- select -->
+<resultMap id="BaseResultMap" type="user">
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="username" javaType="string" property="username" jdbcType="VARCHAR" />
+    <result column="password" javaType="encrypt" property="password" jdbcType="VARCHAR" />
+</resultMap>
+
+<!-- insert -->
+<insert id="insert" parameterType="user">
+    insert into user (id, username, password)
+    values (#{id,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR}, #{password, javaType=encrypt, jdbcType=VARCHAR})
+</insert>
+```
+
+###加密算法
+加密方式统一为 AES 加密，私钥可自定义，查找逻辑如下：
+1. 在 classpath 中依次查找名称为 `encrypt`、`properties/config-common`、`properties/config`、`config`、`application` 的 Properties 文件，直到文件存在且文件中包含名称为 `encrypt.private.key` 的属性时停止
+2. 若不存在上述文件，或文件中均不存在 `encrypt.private.key` 属性，则使用默认值（与 iprd-common 中的私钥相同）
+3. 若以上内置文件不满足需求，业务方可自定义文件名称 ```BundleUtil.bundleNames("common")```，此种方式只从给定的文件中查找，若文件中不包含 `encrypt.private.key` 属性，则使用默认值（与 iprd-common 中的私钥相同）
+
+##注意
+目前 `EncryptTypeHandler` 只支持 javaType 为 String 的情况，如有其它需求，请及时联系我。
