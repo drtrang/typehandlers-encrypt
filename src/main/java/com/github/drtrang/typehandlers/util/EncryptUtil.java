@@ -7,13 +7,18 @@ import java.nio.charset.StandardCharsets;
 import java.security.GeneralSecurityException;
 import java.security.SecureRandom;
 
+import static com.github.drtrang.typehandlers.util.Constants.PRIVATE_KEY_NAME;
+
 /**
  * @author trang
  */
 public final class EncryptUtil {
 
-    private static final String PRIVATE_KEY_NAME = "encrypt.private.key";
-    private static final String PRIVATE_KEY = PropertyUtil.get(PRIVATE_KEY_NAME);
+    private EncryptUtil() {
+        throw new UnsupportedOperationException();
+    }
+
+    private static final String PRIVATE_KEY = BundleUtil.get(PRIVATE_KEY_NAME);
     private static final Charset DEFAULT_CHARSET = StandardCharsets.UTF_8;
 
     /**
