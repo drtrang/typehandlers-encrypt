@@ -78,4 +78,4 @@ mybatis:
 3. 若以上内置文件不满足需求，业务方可自定义文件名称 ```BundleUtil.bundleNames("common")```，此种方式只从给定的文件中查找，若文件中不包含 `encrypt.private.key` 属性，则使用默认值（与 iprd-common 中的私钥相同）
 
 ## 注意
-目前 `EncryptTypeHandler` 只支持 javaType 为 String 的情况，如有其它需求，请及时联系我。
+目前 `EncryptTypeHandler` 只支持 javaType 为 `String` 的情况，如有其它需求，请及时联系我。
