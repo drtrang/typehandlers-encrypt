@@ -6,6 +6,8 @@ import static com.github.drtrang.typehandlers.util.Constants.DEFAULT_BUNDLE_NAME
 import static com.github.drtrang.typehandlers.util.Constants.PRIVATE_KEY_NAME;
 
 /**
+ * Properties 文件工具类
+ *
  * @author trang
  */
 public final class BundleUtil {

@@ -10,6 +10,8 @@ import java.security.SecureRandom;
 import static com.github.drtrang.typehandlers.util.Constants.PRIVATE_KEY_NAME;
 
 /**
+ * 加密工具类
+ *
  * @author trang
  */
 public final class EncryptUtil {
@@ -20,6 +22,13 @@ public final class EncryptUtil {
 
     private static final String PRIVATE_KEY = BundleUtil.get(PRIVATE_KEY_NAME);
     private static final Charset DEFAULT_CHARSET = StandardCharsets.UTF_8;
+
+    // 加密后的最短密文长度，用于兼容尚未刷完的数据
+    private static final int LENGTH = 32;
+
+    public static boolean isEncrypted(String content) {
+        return !StringUtil.isNumeric(content) && content.length() >= LENGTH;
+    }
 
     /**
      * 重载类，使用默认key
@@ -46,7 +55,7 @@ public final class EncryptUtil {
      * @param password：十六进制key，使用前需要先进行hex2byte操作
      * @return 加密后的内容，进行byte2hex后的内容
      */
-    private static String encrypt(String content, String password) {
+    public static String encrypt(String content, String password) {
         return Byte2Hex(encrypt(content.getBytes(DEFAULT_CHARSET), password.getBytes(DEFAULT_CHARSET)));
     }
 
@@ -57,7 +66,7 @@ public final class EncryptUtil {
      * @param password：十六进制key，使用前需要先进行hex2byte操作
      * @return 解密后的明文字符串（UTF-8编码）
      */
-    private static String decrypt(String content, String password) {
+    public static String decrypt(String content, String password) {
         byte[] buffer = decrypt(Hex2Byte(content), password.getBytes(DEFAULT_CHARSET));
         return new String(buffer, DEFAULT_CHARSET);
     }
@@ -68,7 +77,7 @@ public final class EncryptUtil {
      * @param content  需要加密的内容
      * @param password 加密密钥
      */
-    private static byte[] encrypt(byte[] content, byte[] password) {
+    public static byte[] encrypt(byte[] content, byte[] password) {
         return aesCrypt(Cipher.ENCRYPT_MODE, content, password);
     }
 
@@ -78,7 +87,7 @@ public final class EncryptUtil {
      * @param content  待解密内容
      * @param password 解密密钥
      */
-    private static byte[] decrypt(byte[] content, byte[] password) {
+    public static byte[] decrypt(byte[] content, byte[] password) {
         return aesCrypt(Cipher.DECRYPT_MODE, content, password);
     }
 
@@ -108,7 +117,7 @@ public final class EncryptUtil {
     /**
      * 将二进制转换成16进制
      */
-    public static String Byte2Hex(byte buf[]) {
+    private static String Byte2Hex(byte buf[]) {
         StringBuilder sb = new StringBuilder();
         for (byte aBuf : buf) {
             String hex = Integer.toHexString(aBuf & 0xFF);
@@ -123,7 +132,7 @@ public final class EncryptUtil {
     /**
      * 将16进制转换为二进制
      */
-    public static byte[] Hex2Byte(String hexStr) {
+    private static byte[] Hex2Byte(String hexStr) {
         if (hexStr.length() < 1)
             return null;
         byte[] result = new byte[hexStr.length() / 2];
@@ -135,11 +144,4 @@ public final class EncryptUtil {
         return result;
     }
 
-    public static void printDecodeString(String decode) {
-        System.out.println(EncryptUtil.decrypt(decode));
-    }
-
-    public static void printEncodeString(String encode) {
-        System.out.println(EncryptUtil.encrypt(encode));
-    }
 }

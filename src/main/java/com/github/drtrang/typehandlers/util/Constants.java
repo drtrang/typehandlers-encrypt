@@ -1,6 +1,8 @@
 package com.github.drtrang.typehandlers.util;
 
 /**
+ * 常量池
+ *
  * @author trang
  */
 class Constants {
