@@ -22,7 +22,7 @@ import static com.github.drtrang.typehandlers.util.EncryptUtil.*;
  * @author trang
  */
 @MappedTypes(Encrypt.class)
-public class EncryptHandler extends BaseTypeHandler<String> {
+public class EncryptTypeHandler extends BaseTypeHandler<String> {
 
     @Override
     public void setNonNullParameter(PreparedStatement ps, int i, String parameter, JdbcType jdbcType)
