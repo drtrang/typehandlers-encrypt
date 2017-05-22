@@ -77,6 +77,35 @@ public final class ConfigUtil {
         log.debug("init default bundle completed: {}", ConfigUtil.BUNDLE);
     }
 
+    private static void initCrypt() {
+        log.debug("init default crypt");
+        ConfigUtil.CRYPT = findCrypt(findProperty(CRYPT_CLASS_NAME));
+        log.debug("init default crypt completed: {}", ConfigUtil.CRYPT.getClass().getName());
+    }
+
+    public static void bundleNames(String... names) {
+        if (names != null && names.length > 0) {
+            Collections.addAll(EXTRA_BUNDLE_NAMES, names);
+            refreshBundle();
+            refreshCrypt();
+        }
+    }
+
+    private static void refreshBundle() {
+        log.debug("refresh bundle");
+        ConfigUtil.BUNDLE = findBundle(0, EXTRA_BUNDLE_NAMES);
+        log.debug("refresh bundle completed: {}", ConfigUtil.BUNDLE);
+    }
+
+    private static void refreshCrypt() {
+        log.debug("refresh crypt");
+        String className = findProperty(CRYPT_CLASS_NAME);
+        if (!className.equalsIgnoreCase(CRYPT.getClass().getName())) {
+            ConfigUtil.CRYPT = findCrypt(className);
+        }
+        log.debug("refresh crypt completed: {}", ConfigUtil.CRYPT.getClass().getName());
+    }
+
     private static ResourceBundle findBundle(int index, List<String> names) {
         int size = names.size();
         if (index >= size) {
@@ -115,32 +144,6 @@ public final class ConfigUtil {
         } catch (Exception e) {
             log.error("init default crypt failed", e);
             throw new IllegalArgumentException(e);
-        }
-    }
-
-    private static void initCrypt() {
-        log.debug("init default crypt");
-        ConfigUtil.CRYPT = findCrypt(findProperty(CRYPT_CLASS_NAME));
-    }
-
-    private static void refreshCrypt() {
-        String className = findProperty(CRYPT_CLASS_NAME);
-        if (!className.equalsIgnoreCase(CRYPT.getClass().getName())) {
-            ConfigUtil.CRYPT = findCrypt(className);
-        }
-    }
-
-    private static void refreshBundle() {
-        log.debug("refresh bundle");
-        ConfigUtil.BUNDLE = findBundle(0, EXTRA_BUNDLE_NAMES);
-        log.debug("refresh bundle completed: {}");
-    }
-
-    public static void bundleNames(String... names) {
-        if (names != null && names.length > 0) {
-            Collections.addAll(EXTRA_BUNDLE_NAMES, names);
-            refreshBundle();
-            refreshCrypt();
         }
     }
 }
