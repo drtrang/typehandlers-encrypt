@@ -1,6 +1,5 @@
 # MyBatis Type Handlers for Encrypt
 
----
 
 ## 介绍
 应公司安全部门要求，需要对数据库中的敏感信息做加密处理。由于此次需求涉及的字段较多，手动加解密颇为不便且改动较大，一个更加简单、通用的解决方案势在必行。
@@ -119,7 +118,6 @@ encrypt.class.name=com.github.drtrang.typehandlers.crypt.SimpleEncrypt
 <i class="icon-github"></i> BeanCopier 工具：https://github.com/drtrang/Copiers
 <i class="icon-gittip"></i> 微信：dong349096849
 
----
 
 > **注意：**
 > 1. 目前 `EncryptTypeHandler` 只支持 JavaType 为 **String** 的情形，如有其它需求，请及时联系我。
