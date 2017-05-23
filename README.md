@@ -11,9 +11,9 @@
 ## 依赖
 ```xml
 <dependency>
-	<groupId>com.github.drtrang</groupId>
-	<artifactId>typehandlers-encrypt</artifactId>
-	<version>1.0.2</version>
+    <groupId>com.github.drtrang</groupId>
+    <artifactId>typehandlers-encrypt</artifactId>
+    <version>1.0.2</version>
 </dependency>
 ```
 
