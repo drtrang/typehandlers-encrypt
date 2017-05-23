@@ -109,7 +109,7 @@ encrypt.class.name=com.github.drtrang.typehandlers.crypt.SimpleEncrypt
 ```
 
 ## 硬广
-目前项目已开源，并上传到 [Github](https://github.com/drtrang/typehandlers-encrypt)，大家感兴趣的话可以阅读源码。Github 中有配套的 Demo 演示作为参考 [`typehandlers-encrypt-demo`](https://github.com/drtrang/typehandlers-encrypt-demo) ，其中包括 `typehandlers-encrypt` 完整的使用方式，可以结合观看。
+目前项目已开源，并上传到 [Github](https://github.com/drtrang/typehandlers-encrypt)，大家感兴趣的话可以阅读源码。[Github](https://github.com/drtrang/typehandlers-encrypt) 中有配套的 Demo 演示作为参考 [`typehandlers-encrypt-demo`](https://github.com/drtrang/typehandlers-encrypt-demo) ，其中包括 `typehandlers-encrypt` 完整的使用方式，可以结合观看。
 
 如果有问题，可以在 Github 上提 Issue，或者微信交流，以下是联系方式：
 我的 Github 主页：https://github.com/drtrang
