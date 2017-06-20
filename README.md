@@ -9,7 +9,7 @@
 
 ## 实现原理
 
-`typehandlers-encrypt` 基于 MyBatis 的 TypeHandler 开发，通过 TypeHandler 可以在 JavaType 和 JdbcType 中互相转换的特性，拦截 JavaType 为 `com.github.drtrang.typehandlers.alias.Encrypt` 的 SQL，在预处理语句（PreparedStatement）中设置参数时自动加密，并在结果集（ResultSet）中取值时自动解密。
+`typehandlers-encrypt` 基于 MyBatis 的 TypeHandler 开发，通过 TypeHandler 可以在 JavaType 和 JdbcType 中互相转换的特性，拦截 JavaType 为 `com.github.trang.typehandlers.alias.Encrypt` 的 SQL，在预处理语句（PreparedStatement）中设置参数时自动加密，并在结果集（ResultSet）中取值时自动解密。
 
 注：由于依赖 MyBatis，使用时需要将 `EncryptTypeHandler` 和 `Encrypt` 注册到 MyBatis，否则无法生效，注册方式见 **声明 EncryptTypeHandler**。
 
@@ -105,7 +105,7 @@ encrypt.private.key=xxx
 ### 自定义加密算法
 `typehandlers-encrypt` 默认的加密算法是 **AES 对称加密**，如果默认算法不满足实际需求，用户可以自己实现 `com.github.trang.typehandlers.crypt.Crypt` 接口，并在配置文件中声明实现类的全路径。
 ```properties
-encrypt.class.name=com.github.drtrang.typehandlers.crypt.SimpleEncrypt
+encrypt.class.name=com.github.trang.typehandlers.crypt.SimpleEncrypt
 ```
 
 
