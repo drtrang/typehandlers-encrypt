@@ -6,7 +6,7 @@
 
     <groupId>com.github.drtrang</groupId>
     <artifactId>typehandlers-encrypt</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3-SNAPSHOT</version>
 
     <name>type-handlers-encrypt</name>
     <description>MyBatis Type Handlers for Encrypt</description>

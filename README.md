@@ -4,10 +4,18 @@
 ## 介绍
 应公司安全部门要求，需要对数据库中的敏感信息做加密处理。由于此次需求涉及的字段较多，手动加解密颇为不便且改动较大，一个更加简单、通用的解决方案势在必行。
 
-`typehandlers-encrypt` 项目在这种背景下诞生，用户使用时无需更改业务代码，仅需少量配置即可实现数据库字段的加解密操作，大大减小了该需求对用户的影响。
+`typehandlers-encrypt` 项目在这种背景下诞生，用户使用时无需更改业务代码，仅需少量配置即可实现数据库指定字段的加解密操作，大大减小了对用户的影响。
 
 
-## 依赖
+## 实现原理
+
+`typehandlers-encrypt` 基于 MyBatis 的 TypeHandler 开发，通过 TypeHandler 可以在 JavaType 和 JdbcType 中互相转换的特性，拦截 JavaType 为 `com.github.drtrang.typehandlers.alias.Encrypt` 的 SQL，在预处理语句（PreparedStatement）中设置参数时自动加密，并在结果集（ResultSet）中取值时自动解密。
+
+注：由于依赖 MyBatis，使用时需要将 `EncryptTypeHandler` 和 `Encrypt` 注册到 MyBatis，否则无法生效，注册方式见 **声明 EncryptTypeHandler**。
+
+
+## 应用
+### 依赖
 ```xml
 <dependency>
     <groupId>com.github.drtrang</groupId>
@@ -16,8 +24,6 @@
 </dependency>
 ```
 
-
-## 使用方式
 ### 声明 EncryptTypeHandler
 #### 1. 单独使用 MyBatis
 ```xml
@@ -50,7 +56,7 @@ mybatis:
     type-handlers-package: com.github.drtrang.typehandlers.type
 ```
 
-**以上配置方式任选其一即可，请根据实际情况选择。**
+注：以上配置方式**任选其一**即可，请根据实际情况选择。
 
 ### 使用 EncryptTypeHandler
 ```xml
@@ -72,12 +78,6 @@ mybatis:
     update user set password=#{password, javaType=encrypt, jdbcType=VARCHAR} where id=#{id}
 </update>
 ```
-
-
-## 实现原理
-`typehandlers-encrypt` 基于 MyBatis 的 TypeHandler 开发，通过拦截 JavaType 为 `com.github.drtrang.typehandlers.alias.Encrypt` 的 PreparedStatement，实现指定字段的加解密操作。
-
-由于依赖 MyBatis，使用时需要将 `EncryptTypeHandler` 和 `Encrypt` 注册到 MyBatis，否则无法生效，注册方式见 **声明 EncryptTypeHandler**。
 
 
 ## 进阶
@@ -107,6 +107,7 @@ encrypt.private.key=xxx
 ```properties
 encrypt.class.name=com.github.drtrang.typehandlers.crypt.SimpleEncrypt
 ```
+
 
 ## 硬广
 目前项目已开源，并上传到 [Github](https://github.com/drtrang/typehandlers-encrypt)，大家感兴趣的话可以阅读源码。[Github](https://github.com/drtrang/typehandlers-encrypt) 中有配套的 Demo 演示 [`typehandlers-encrypt-demo`](https://github.com/drtrang/typehandlers-encrypt-demo)，其中包括 `typehandlers-encrypt` 完整的使用方式，可以作为参考。
