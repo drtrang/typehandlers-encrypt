@@ -1,4 +1,4 @@
-package com.github.drtrang.typehandlers.alias;
+package com.github.trang.typehandlers.alias;
 
 import org.apache.ibatis.type.Alias;
 

@@ -1,4 +1,4 @@
-package com.github.drtrang.typehandlers.crypt;
+package com.github.trang.typehandlers.crypt;
 
 /**
  * 加密接口，自定义算法必须实现此接口

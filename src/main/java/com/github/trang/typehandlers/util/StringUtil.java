@@ -1,4 +1,4 @@
-package com.github.drtrang.typehandlers.util;
+package com.github.trang.typehandlers.util;
 
 /**
  * 字符串工具类

@@ -1,4 +1,4 @@
-package com.github.drtrang.typehandlers.util;
+package com.github.trang.typehandlers.util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,6 +1,6 @@
-package com.github.drtrang.typehandlers.crypt;
+package com.github.trang.typehandlers.crypt;
 
-import com.github.drtrang.typehandlers.util.ConfigUtil;
+import com.github.trang.typehandlers.util.ConfigUtil;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;

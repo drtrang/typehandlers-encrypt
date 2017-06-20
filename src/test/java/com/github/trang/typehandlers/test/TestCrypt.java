@@ -1,6 +1,6 @@
-package com.github.drtrang.typehandlers.test;
+package com.github.trang.typehandlers.test;
 
-import com.github.drtrang.typehandlers.crypt.Crypt;
+import com.github.trang.typehandlers.crypt.Crypt;
 
 /**
  * @author trang

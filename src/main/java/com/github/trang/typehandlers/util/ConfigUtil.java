@@ -1,12 +1,12 @@
-package com.github.drtrang.typehandlers.util;
+package com.github.trang.typehandlers.util;
 
-import com.github.drtrang.typehandlers.crypt.Crypt;
+import com.github.trang.typehandlers.crypt.Crypt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
-import static com.github.drtrang.typehandlers.util.Constants.*;
+import static com.github.trang.typehandlers.util.Constants.*;
 
 /**
  * 配置文件工具类

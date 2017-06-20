@@ -1,7 +1,7 @@
-package com.github.drtrang.typehandlers.test;
+package com.github.trang.typehandlers.test;
 
-import com.github.drtrang.typehandlers.util.ConfigUtil;
-import com.github.drtrang.typehandlers.util.EncryptUtil;
+import com.github.trang.typehandlers.util.ConfigUtil;
+import com.github.trang.typehandlers.util.EncryptUtil;
 import org.junit.Test;
 
 import java.util.concurrent.ExecutorService;

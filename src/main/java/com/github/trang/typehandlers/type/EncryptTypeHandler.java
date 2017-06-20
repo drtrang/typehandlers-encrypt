@@ -1,6 +1,7 @@
-package com.github.drtrang.typehandlers.type;
+package com.github.trang.typehandlers.type;
 
-import com.github.drtrang.typehandlers.alias.Encrypt;
+import com.github.trang.typehandlers.alias.Encrypt;
+import com.github.trang.typehandlers.util.EncryptUtil;
 import org.apache.ibatis.type.BaseTypeHandler;
 import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.MappedTypes;
@@ -9,8 +10,6 @@ import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import static com.github.drtrang.typehandlers.util.EncryptUtil.*;
 
 /**
  * 拦截 JavaType 为 #{@link Encrypt} 的 SQL
@@ -28,26 +27,26 @@ public class EncryptTypeHandler extends BaseTypeHandler<String> {
     public void setNonNullParameter(PreparedStatement ps, int i, String parameter, JdbcType jdbcType)
             throws SQLException {
         // 只要 parameter 非空都进行加密
-        ps.setString(i, encrypt(parameter));
+        ps.setString(i, EncryptUtil.encrypt(parameter));
     }
 
     @Override
     public String getNullableResult(ResultSet rs, String columnName) throws SQLException {
         String r = rs.getString(columnName);
         // 兼容待修复的数据
-        return r == null ? null : isEncrypted(r) ? decrypt(r) : r;
+        return r == null ? null : EncryptUtil.isEncrypted(r) ? EncryptUtil.decrypt(r) : r;
     }
 
     @Override
     public String getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
         String r = rs.getString(columnIndex);
-        return r == null ? null : isEncrypted(r) ? decrypt(r) : r;
+        return r == null ? null : EncryptUtil.isEncrypted(r) ? EncryptUtil.decrypt(r) : r;
     }
 
     @Override
     public String getNullableResult(CallableStatement cs, int columnIndex) throws SQLException {
         String r = cs.getString(columnIndex);
-        return r == null ? null : isEncrypted(r) ? decrypt(r) : r;
+        return r == null ? null : EncryptUtil.isEncrypted(r) ? EncryptUtil.decrypt(r) : r;
     }
 
 }
