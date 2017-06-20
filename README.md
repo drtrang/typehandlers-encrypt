@@ -29,11 +29,11 @@
 ```xml
 <!-- mybatis-config.xml -->
 <typeAliases>
-    <package name="com.github.drtrang.typehandlers.alias" />
+    <package name="com.github.trang.typehandlers.alias" />
 </typeAliases>
 
 <typeHandlers>
-    <package name="com.github.drtrang.typehandlers.type" />
+    <package name="com.github.trang.typehandlers.type" />
 </typeHandlers>
 ```
 
@@ -42,8 +42,8 @@
 @Bean
 public SqlSessionFactory sqlSessionFactory(Configuration config) {
     SqlSessionFactoryBean factory = new SqlSessionFactoryBean();
-    factory.setTypeAliasesPackage("com.github.drtrang.typehandlers.alias");
-    factory.setTypeHandlersPackage("com.github.drtrang.typehandlers.type");
+    factory.setTypeAliasesPackage("com.github.trang.typehandlers.alias");
+    factory.setTypeHandlersPackage("com.github.trang.typehandlers.type");
     return factory.getObject();
 }
 ```
@@ -52,8 +52,8 @@ public SqlSessionFactory sqlSessionFactory(Configuration config) {
 ```yaml
 ##application.yml
 mybatis:
-    type-aliases-package: com.github.drtrang.typehandlers.alias
-    type-handlers-package: com.github.drtrang.typehandlers.type
+    type-aliases-package: com.github.trang.typehandlers.alias
+    type-handlers-package: com.github.trang.typehandlers.type
 ```
 
 注：以上配置方式**任选其一**即可，请根据实际情况选择。
@@ -86,7 +86,7 @@ mybatis:
 配置示例：
 ```properties
 encrypt.private.key=xxx
-encrypt.class.name=com.github.drtrang.typehandlers.crypt.SimpleEncrypt
+encrypt.class.name=com.github.trang.typehandlers.crypt.SimpleEncrypt
 ```
 
 ### 配置文件查找
@@ -103,7 +103,7 @@ encrypt.private.key=xxx
 ```
 
 ### 自定义加密算法
-`typehandlers-encrypt` 默认的加密算法是 **AES 对称加密**，如果默认算法不满足实际需求，用户可以自己实现 `com.github.drtrang.typehandlers.crypt.Crypt` 接口，并在配置文件中声明实现类的全路径。
+`typehandlers-encrypt` 默认的加密算法是 **AES 对称加密**，如果默认算法不满足实际需求，用户可以自己实现 `com.github.trang.typehandlers.crypt.Crypt` 接口，并在配置文件中声明实现类的全路径。
 ```properties
 encrypt.class.name=com.github.drtrang.typehandlers.crypt.SimpleEncrypt
 ```
