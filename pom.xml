@@ -6,7 +6,7 @@
 
     <groupId>com.github.drtrang</groupId>
     <artifactId>typehandlers-encrypt</artifactId>
-    <version>1.0.3-SNAPSHOT</version>
+    <version>1.0.2</version>
 
     <name>type-handlers-encrypt</name>
     <description>MyBatis Type Handlers for Encrypt</description>
@@ -32,6 +32,17 @@
         <developerConnection>scm:git:https://github.com/drtrang</developerConnection>
         <tag>HEAD</tag>
     </scm>
+
+    <distributionManagement>
+        <snapshotRepository>
+            <id>oss</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </snapshotRepository>
+        <repository>
+            <id>oss</id>
+            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+        </repository>
+    </distributionManagement>
 
     <properties>
         <!-- 工程参数 -->
@@ -182,16 +193,6 @@
                     </plugin>
                 </plugins>
             </build>
-            <distributionManagement>
-                <snapshotRepository>
-                    <id>oss</id>
-                    <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-                </snapshotRepository>
-                <repository>
-                    <id>oss</id>
-                    <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-                </repository>
-            </distributionManagement>
         </profile>
     </profiles>
 
