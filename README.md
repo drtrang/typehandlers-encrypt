@@ -1,5 +1,8 @@
 # MyBatis Type Handlers for Encrypt
 
+[![Build Status](https://www.travis-ci.org/drtrang/typehandlers-encrypt.svg?branch=master)](https://www.travis-ci.org/drtrang/typehandlers-encrypt)
+[![Coverage Status](https://coveralls.io/repos/github/drtrang/typehandlers-encrypt/badge.svg?branch=master)](https://coveralls.io/github/drtrang/typehandlers-encrypt?branch=master)
+[![License](http://img.shields.io/badge/license-apache%202-brightgreen.svg)](https://github.com/drtrang/typehandlers-encrypt/blob/master/LICENSE)
 
 ## 介绍
 应公司安全部门要求，需要对数据库中的敏感信息做加密处理。由于此次需求涉及的字段较多，手动加解密颇为不便且改动较大，一个更加简单、通用的解决方案势在必行。
