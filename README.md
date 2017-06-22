@@ -2,6 +2,7 @@
 
 [![Build Status](https://www.travis-ci.org/drtrang/typehandlers-encrypt.svg?branch=master)](https://www.travis-ci.org/drtrang/typehandlers-encrypt)
 [![Coverage Status](https://coveralls.io/repos/github/drtrang/typehandlers-encrypt/badge.svg?branch=master)](https://coveralls.io/github/drtrang/typehandlers-encrypt?branch=master)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.drtrang/typehandlers-encrypt/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.drtrang/typehandlers-encrypt)
 [![License](http://img.shields.io/badge/license-apache%202-brightgreen.svg)](https://github.com/drtrang/typehandlers-encrypt/blob/master/LICENSE)
 
 ## 介绍
