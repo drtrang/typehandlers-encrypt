@@ -121,7 +121,7 @@ encrypt.class.name=com.github.trang.typehandlers.crypt.SimpleEncrypt
 该项目的 Github 地址：https://github.com/drtrang/typehandlers-encrypt<br>
 Demo 的 Github 地址：https://github.com/drtrang/typehandlers-encrypt-demo<br>
 BeanCopier 工具：https://github.com/drtrang/Copiers<br>
-微信：dong349096849
+QQ：349096849
 
 
 > **注意：**
