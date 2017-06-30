@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.1.0 2017-06-30
+1. 更改包名为 `com.github.trang.typehandlers`
+2. 发布到 Maven 中央仓库
+
 ## 1.0.2 2017-05-23
 1. 新增自定义加密算法功能
 
