@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.1.1 2017-10-14
+1. FIX ISSUE #1
+2. MyBatis 版本 3.4.4 -> 3.4.5
+3. Maven 插件常规升级
+
 ## 1.1.0 2017-06-30
 1. 更改包名为 `com.github.trang.typehandlers`
 2. 发布到 Maven 中央仓库

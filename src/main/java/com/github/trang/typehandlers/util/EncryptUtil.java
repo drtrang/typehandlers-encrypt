@@ -15,7 +15,8 @@ public final class EncryptUtil {
     private static final int LENGTH = 32;
 
     public static boolean isEncrypted(String content) {
-        return !StringUtil.isNumeric(content) && content.length() >= LENGTH;
+        // FIX #1
+        return StringUtil.isNotBlank(content) && !StringUtil.isNumeric(content) && content.length() >= LENGTH;
     }
 
     public static String encrypt(String content) {

@@ -20,7 +20,7 @@ public enum SimpleCrypt implements Crypt {
     private static final Charset DEFAULT_CHARSET = StandardCharsets.UTF_8;
 
     /**
-     * 重载类，使用默认key
+     * 加密字符串，重载类，使用默认key
      *
      * @param content 待加密内容，普通字符串
      * @return 加密后的内容，进行byte2hex后的内容
@@ -32,7 +32,7 @@ public enum SimpleCrypt implements Crypt {
     /**
      * 解密收到的十六进制字符串，重载类，使用默认key
      *
-     * @param content：十六进制字符串，使用前需要先进行hex2byte操作
+     * @param content 十六进制字符串，使用前需要先进行hex2byte操作
      * @return 解密后的明文字符串（UTF-8编码）
      */
     public String decrypt(String content) {
@@ -40,8 +40,10 @@ public enum SimpleCrypt implements Crypt {
     }
 
     /**
-     * @param content：待加密内容，普通字符串
-     * @param password：十六进制key，使用前需要先进行hex2byte操作
+     * 加密字符串，使用自定义key
+     *
+     * @param content 待加密内容，普通字符串
+     * @param password 十六进制key，使用前需要先进行hex2byte操作
      * @return 加密后的内容，进行byte2hex后的内容
      */
     public String encrypt(String content, String password) {
@@ -51,8 +53,8 @@ public enum SimpleCrypt implements Crypt {
     /**
      * 解密收到的十六进制字符串
      *
-     * @param content：十六进制字符串，使用前需要先进行hex2byte操作
-     * @param password：十六进制key，使用前需要先进行hex2byte操作
+     * @param content 十六进制字符串，使用前需要先进行hex2byte操作
+     * @param password 十六进制key，使用前需要先进行hex2byte操作
      * @return 解密后的明文字符串（UTF-8编码）
      */
     public String decrypt(String content, String password) {
