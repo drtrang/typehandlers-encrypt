@@ -20,19 +20,19 @@ public enum SimpleCrypt implements Crypt {
     private static final Charset DEFAULT_CHARSET = StandardCharsets.UTF_8;
 
     /**
-     * 加密字符串，重载类，使用默认key
+     * 加密字符串，使用默认key
      *
      * @param content 待加密内容，普通字符串
-     * @return 加密后的内容，进行byte2hex后的内容
+     * @return 加密后的 16 进制字符串
      */
     public String encrypt(String content) {
         return encrypt(content, ConfigUtil.getPrivateKey());
     }
 
     /**
-     * 解密收到的十六进制字符串，重载类，使用默认key
+     * 解密 16 进制字符串，使用默认key
      *
-     * @param content 十六进制字符串，使用前需要先进行hex2byte操作
+     * @param content 加密后的 16 进制字符串
      * @return 解密后的明文字符串（UTF-8编码）
      */
     public String decrypt(String content) {
@@ -43,30 +43,30 @@ public enum SimpleCrypt implements Crypt {
      * 加密字符串，使用自定义key
      *
      * @param content 待加密内容，普通字符串
-     * @param password 十六进制key，使用前需要先进行hex2byte操作
-     * @return 加密后的内容，进行byte2hex后的内容
+     * @param password 密钥
+     * @return 加密后的 16 进制字符串
      */
     public String encrypt(String content, String password) {
-        return Byte2Hex(encrypt(content.getBytes(DEFAULT_CHARSET), password.getBytes(DEFAULT_CHARSET)));
+        return byte2Hex(encrypt(content.getBytes(DEFAULT_CHARSET), password.getBytes(DEFAULT_CHARSET)));
     }
 
     /**
-     * 解密收到的十六进制字符串
+     * 解密 16 进制字符串，使用自定义key
      *
-     * @param content 十六进制字符串，使用前需要先进行hex2byte操作
-     * @param password 十六进制key，使用前需要先进行hex2byte操作
+     * @param content 加密后的 16 进制字符串
+     * @param password 密钥
      * @return 解密后的明文字符串（UTF-8编码）
      */
     public String decrypt(String content, String password) {
-        byte[] buffer = decrypt(Hex2Byte(content), password.getBytes(DEFAULT_CHARSET));
+        byte[] buffer = decrypt(hex2Byte(content), password.getBytes(DEFAULT_CHARSET));
         return new String(buffer, DEFAULT_CHARSET);
     }
 
     /**
      * 加密
      *
-     * @param content  需要加密的内容
-     * @param password 加密密钥
+     * @param content  待加密的内容
+     * @param password 密钥
      */
     public byte[] encrypt(byte[] content, byte[] password) {
         return aesCrypt(Cipher.ENCRYPT_MODE, content, password);
@@ -76,14 +76,14 @@ public enum SimpleCrypt implements Crypt {
      * 解密
      *
      * @param content  待解密内容
-     * @param password 解密密钥
+     * @param password 密钥
      */
     public byte[] decrypt(byte[] content, byte[] password) {
         return aesCrypt(Cipher.DECRYPT_MODE, content, password);
     }
 
     /**
-     * AES加密/解密
+     * AES 加密/解密
      *
      * @param content  需要 加密/解密 的内容
      * @param password 加密/解密 密钥
@@ -106,9 +106,9 @@ public enum SimpleCrypt implements Crypt {
     }
 
     /**
-     * 将二进制转换成16进制
+     * 将 2 进制转换成 16 进制字符串
      */
-    private String Byte2Hex(byte buf[]) {
+    private String byte2Hex(byte buf[]) {
         StringBuilder sb = new StringBuilder();
         for (byte aBuf : buf) {
             String hex = Integer.toHexString(aBuf & 0xFF);
@@ -121,9 +121,9 @@ public enum SimpleCrypt implements Crypt {
     }
 
     /**
-     * 将16进制转换为二进制
+     * 将 16 进制字符串转换为 2 进制
      */
-    private byte[] Hex2Byte(String hexStr) {
+    private byte[] hex2Byte(String hexStr) {
         if (hexStr.length() < 1)
             return null;
         byte[] result = new byte[hexStr.length() / 2];

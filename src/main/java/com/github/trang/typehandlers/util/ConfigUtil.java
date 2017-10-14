@@ -1,6 +1,7 @@
 package com.github.trang.typehandlers.util;
 
 import com.github.trang.typehandlers.crypt.Crypt;
+import com.github.trang.typehandlers.crypt.SimpleCrypt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -132,6 +133,9 @@ public final class ConfigUtil {
             if (!Crypt.class.isAssignableFrom(cryptClass)) {
                 throw new IllegalArgumentException("Class '" + cryptClass.getSimpleName() + "' must implements 'Crypt'");
             }
+            if (SimpleCrypt.class.getName().equals(className)) {{
+                return SimpleCrypt.INSTANCE;
+            }}
             Class<Crypt> clazz = (Class<Crypt>) cryptClass;
             if (clazz.isEnum()) {
                 Crypt[] constants = clazz.getEnumConstants();
@@ -147,4 +151,5 @@ public final class ConfigUtil {
             throw new IllegalArgumentException(e);
         }
     }
+
 }

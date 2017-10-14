@@ -9,4 +9,5 @@ import org.apache.ibatis.type.Alias;
  */
 @Alias("encrypt")
 public class Encrypt {
+
 }
