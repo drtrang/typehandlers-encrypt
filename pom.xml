@@ -9,7 +9,7 @@
     <version>1.1.1</version>
 
     <name>type-handlers-encrypt</name>
-    <description>MyBatis Type Handlers for Encrypt</description>
+    <description>MyBatis Type Handlers for Encrypt.</description>
     <url>https://github.com/drtrang/typehandlers-encrypt</url>
 
     <licenses>
