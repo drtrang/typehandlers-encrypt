@@ -64,20 +64,20 @@ mybatis:
 
 ### 使用 EncryptTypeHandler
 ```xml
-<!-- select -->
+<!-- select： 在 resultMap 或 SQL 中需要加密的字段上声明 `javaType="encrypt"` -->
 <resultMap id="BaseResultMap" type="user">
     <id column="id" property="id" jdbcType="BIGINT" />
     <result column="username" javaType="string" jdbcType="VARCHAR" property="username" />
-    <result column="password" javaType="encrypt" jdbcType="VARCHAR" property="password" />
+    <result column="password" javaType="encrypt" jdbcType="VARCHAR" property="password" />
 </resultMap>
 
-<!-- insert -->
+<!-- insert： 在 SQL 中需要加密的字段上声明 `javaType="encrypt"` -->
 <insert id="insert" parameterType="user">
     insert into user (id, username, password)
     values (#{id,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR}, #{password, javaType=encrypt, jdbcType=VARCHAR})
 </insert>
 
-<!-- update -->
+<!-- update： 在 SQL 中需要加密的字段上声明 `javaType="encrypt"` -->
 <update id="update" parameterType="user">
     update user set password=#{password, javaType=encrypt, jdbcType=VARCHAR} where id=#{id}
 </update>
@@ -85,7 +85,7 @@ mybatis:
 
 
 ## 进阶
-`typehandlers-encrypt` 内置了 16 位长度密钥与 AES 加密算法，支持开箱即用，但用户也可以自定义密钥和加密算法，只需要在配置文件中声明对应的属性即可。需要注意，**两者同时配置时，要声明在同一文件里**。
+`typehandlers-encrypt` 内置了 AES 加密算法与默认的 16 位密钥，支持**开箱即用**，但用户也可以自定义加密算法和密钥，只需要在配置文件中声明对应的配置即可。需要注意，**两者同时配置时，要声明在同一文件里**。
 
 配置示例：
 ```properties
@@ -98,7 +98,7 @@ encrypt.class.name=com.github.trang.typehandlers.crypt.SimpleEncrypt
 
 方式二：如果项目中不存在以上文件，且不想单独新增，也可以在项目启动时调用 `ConfigUtil.bundleNames("xxx")` 来指定要读取的文件，这时只会从用户给定的文件中查找。
 
-**当没有查找到相应配置时，项目会使用内置的配置。**
+**当没有查找到相应配置时，项目会使用内置的默认配置。**
 
 ### 自定义密钥
 `typehandlers-encrypt` 支持自定义密钥，只需在配置文件中声明即可。
@@ -116,10 +116,10 @@ encrypt.class.name=com.github.trang.typehandlers.crypt.SimpleEncrypt
 ## 硬广
 目前项目已开源，并上传到 [Github](https://github.com/drtrang/typehandlers-encrypt)，大家感兴趣的话可以阅读源码。[Github](https://github.com/drtrang/typehandlers-encrypt) 中有配套的 Demo 演示 [`typehandlers-encrypt-demo`](https://github.com/drtrang/typehandlers-encrypt-demo)，其中包括 `typehandlers-encrypt` 完整的使用方式，可以作为参考。
 
-如果有问题，可以在 Github 上提 Issue，或者微信交流，以下是联系方式：<br>
+如果有问题，可以在 Github 上提 ISSUE，或者 QQ 交流，以下是联系方式：<br>
 我的 Github 主页：https://github.com/drtrang<br>
 该项目的 Github 地址：https://github.com/drtrang/typehandlers-encrypt<br>
-Demo 的 Github 地址：https://github.com/drtrang/typehandlers-encrypt-demo<br>
+配套 Demo 的 Github 地址：https://github.com/drtrang/typehandlers-encrypt-demo<br>
 BeanCopier 工具：https://github.com/drtrang/Copiers<br>
 QQ：349096849
 
