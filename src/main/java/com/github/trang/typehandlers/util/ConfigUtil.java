@@ -122,6 +122,7 @@ public final class ConfigUtil {
         }
     }
 
+    @SuppressWarnings("unchecked")
     private static Crypt findCrypt(String className) {
         try {
             if (StringUtil.isBlank(className)) {
