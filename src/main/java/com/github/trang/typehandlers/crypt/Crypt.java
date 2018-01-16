@@ -7,12 +7,20 @@ package com.github.trang.typehandlers.crypt;
  */
 public interface Crypt {
 
+    /**
+     * 加密数据
+     *
+     * @param content 明文
+     * @return 密文
+     */
     String encrypt(String content);
 
-    String encrypt(String content, String password);
-
+    /**
+     * 加密数据
+     *
+     * @param content 密文
+     * @return 明文
+     */
     String decrypt(String content);
-
-    String decrypt(String content, String password);
 
 }

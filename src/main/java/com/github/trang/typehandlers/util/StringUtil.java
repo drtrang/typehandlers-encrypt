@@ -45,17 +45,4 @@ class StringUtil {
         return true;
     }
 
-    public static boolean isNumericSpace(final CharSequence cs) {
-        if (cs == null) {
-            return false;
-        }
-        final int sz = cs.length();
-        for (int i = 0; i < sz; i++) {
-            if (!Character.isDigit(cs.charAt(i)) && cs.charAt(i) != ' ') {
-                return false;
-            }
-        }
-        return true;
-    }
-
 }

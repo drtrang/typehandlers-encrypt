@@ -1,4 +1,4 @@
-package com.github.trang.typehandlers.test;
+package com.github.trang.typehandlers.test.converalls;
 
 import com.github.trang.typehandlers.util.ConfigUtil;
 import com.github.trang.typehandlers.util.EncryptUtil;

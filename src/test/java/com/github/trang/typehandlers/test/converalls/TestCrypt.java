@@ -1,4 +1,4 @@
-package com.github.trang.typehandlers.test;
+package com.github.trang.typehandlers.test.converalls;
 
 import com.github.trang.typehandlers.crypt.Crypt;
 
@@ -13,18 +13,8 @@ public class TestCrypt implements Crypt {
     }
 
     @Override
-    public String encrypt(String content, String password) {
-        return "2";
-    }
-
-    @Override
     public String decrypt(String content) {
         return "3";
-    }
-
-    @Override
-    public String decrypt(String content, String password) {
-        return "4";
     }
 
 }

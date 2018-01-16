@@ -20,86 +20,112 @@ public enum SimpleCrypt implements Crypt {
     private static final Charset DEFAULT_CHARSET = StandardCharsets.UTF_8;
 
     /**
-     * 加密字符串，使用默认key
+     * 加密数据
      *
-     * @param content 待加密内容，普通字符串
+     * @param content 待加密数据
      * @return 加密后的 16 进制字符串
      */
+    @Override
     public String encrypt(String content) {
-        return encrypt(content, ConfigUtil.getPrivateKey());
+        return encrypt(content, DEFAULT_CHARSET);
     }
 
     /**
-     * 解密 16 进制字符串，使用默认key
+     * 加密数据
      *
-     * @param content 加密后的 16 进制字符串
-     * @return 解密后的明文字符串（UTF-8编码）
-     */
-    public String decrypt(String content) {
-        return decrypt(content, ConfigUtil.getPrivateKey());
-    }
-
-    /**
-     * 加密字符串，使用自定义key
-     *
-     * @param content 待加密内容，普通字符串
-     * @param password 密钥
+     * @param content 待加密数据
+     * @param charset 字符集
      * @return 加密后的 16 进制字符串
      */
-    public String encrypt(String content, String password) {
-        return byte2Hex(encrypt(content.getBytes(DEFAULT_CHARSET), password.getBytes(DEFAULT_CHARSET)));
+    public String encrypt(String content, Charset charset) {
+        return encrypt(content, ConfigUtil.getPrivateKey(), charset);
     }
 
     /**
-     * 解密 16 进制字符串，使用自定义key
+     * 加密数据
+     *
+     * @param content 待加密数据
+     * @param key     密钥
+     * @param charset 字符集
+     * @return 加密后的 16 进制字符串
+     */
+    public String encrypt(String content, String key, Charset charset) {
+        return byte2Hex(encrypt(content.getBytes(charset), key.getBytes(charset)));
+    }
+
+    /**
+     * 执行加密的方法
+     *
+     * @param content 待加密数据
+     * @param key     密钥
+     */
+    public byte[] encrypt(byte[] content, byte[] key) {
+        return aesCrypt(Cipher.ENCRYPT_MODE, content, key);
+    }
+
+    /**
+     * 解密 16 进制字符串
      *
      * @param content 加密后的 16 进制字符串
-     * @param password 密钥
      * @return 解密后的明文字符串（UTF-8编码）
      */
-    public String decrypt(String content, String password) {
-        byte[] buffer = decrypt(hex2Byte(content), password.getBytes(DEFAULT_CHARSET));
-        return new String(buffer, DEFAULT_CHARSET);
+    @Override
+    public String decrypt(String content) {
+        return decrypt(content, DEFAULT_CHARSET);
     }
 
     /**
-     * 加密
+     * 解密 16 进制字符串
      *
-     * @param content  待加密的内容
-     * @param password 密钥
+     * @param content 加密后的 16 进制字符串
+     * @param charset 字符集
+     * @return 解密后的明文字符串（UTF-8编码）
      */
-    public byte[] encrypt(byte[] content, byte[] password) {
-        return aesCrypt(Cipher.ENCRYPT_MODE, content, password);
+    public String decrypt(String content, Charset charset) {
+        return decrypt(content, ConfigUtil.getPrivateKey(), charset);
     }
 
     /**
-     * 解密
+     * 解密 16 进制字符串
      *
-     * @param content  待解密内容
-     * @param password 密钥
+     * @param content 加密后的 16 进制字符串
+     * @param key     密钥
+     * @param charset 字符集
+     * @return 解密后的明文字符串（UTF-8编码）
      */
-    public byte[] decrypt(byte[] content, byte[] password) {
-        return aesCrypt(Cipher.DECRYPT_MODE, content, password);
+    public String decrypt(String content, String key, Charset charset) {
+        byte[] buffer = decrypt(hex2Byte(content), key.getBytes(charset));
+        return new String(buffer, charset);
+    }
+
+    /**
+     * 实际执行解密的方法
+     *
+     * @param content 待解密内容
+     * @param key     密钥
+     */
+    public byte[] decrypt(byte[] content, byte[] key) {
+        return aesCrypt(Cipher.DECRYPT_MODE, content, key);
     }
 
     /**
      * AES 加密/解密
      *
-     * @param content  需要 加密/解密 的内容
-     * @param password 加密/解密 密钥
+     * @param content 需要 加密/解密 的内容
+     * @param key     加密/解密 密钥
      */
-    private byte[] aesCrypt(int mode, byte[] content, byte[] password) {
+    private byte[] aesCrypt(int mode, byte[] content, byte[] key) {
         try {
             SecureRandom sRandom = SecureRandom.getInstance("SHA1PRNG");
-            sRandom.setSeed(password);
-            byte[] randomBytes = password.clone();
+            sRandom.setSeed(key);
+            byte[] randomBytes = key.clone();
             sRandom.nextBytes(randomBytes);
-            SecretKeySpec key = new SecretKeySpec(randomBytes, "AES");
+            SecretKeySpec keySpec = new SecretKeySpec(randomBytes, "AES");
 
-            Cipher cipher = Cipher.getInstance("AES");// 创建密码器
-            cipher.init(mode, key);
+            Cipher cipher = Cipher.getInstance("AES");
+            cipher.init(mode, keySpec);
 
-            return cipher.doFinal(content);// 加密/解密
+            return cipher.doFinal(content);
         } catch (GeneralSecurityException e) {
             throw new SecurityException(e);
         }
@@ -108,7 +134,7 @@ public enum SimpleCrypt implements Crypt {
     /**
      * 将 2 进制转换成 16 进制字符串
      */
-    private String byte2Hex(byte buf[]) {
+    private String byte2Hex(byte[] buf) {
         StringBuilder sb = new StringBuilder();
         for (byte aBuf : buf) {
             String hex = Integer.toHexString(aBuf & 0xFF);
@@ -124,8 +150,9 @@ public enum SimpleCrypt implements Crypt {
      * 将 16 进制字符串转换为 2 进制
      */
     private byte[] hex2Byte(String hexStr) {
-        if (hexStr.length() < 1)
+        if (hexStr.length() < 1) {
             return null;
+        }
         byte[] result = new byte[hexStr.length() / 2];
         for (int i = 0; i < hexStr.length() / 2; i++) {
             int high = Integer.parseInt(hexStr.substring(i * 2, i * 2 + 1), 16);

@@ -56,6 +56,15 @@ public final class ConfigUtil {
         return ConfigUtil.CRYPT;
     }
 
+    /**
+     * 检查是否需要兼容历史数据
+     * TODO
+     * @return
+     */
+    public static boolean isChecked() {
+        return false;
+    }
+
     private static void init() {
         initBundleNames();
         initBundle();
@@ -133,9 +142,9 @@ public final class ConfigUtil {
             if (!Crypt.class.isAssignableFrom(cryptClass)) {
                 throw new IllegalArgumentException("Class '" + cryptClass.getSimpleName() + "' must implements 'Crypt'");
             }
-            if (SimpleCrypt.class.getName().equals(className)) {{
+            if (SimpleCrypt.class.getName().equals(className)) {
                 return SimpleCrypt.INSTANCE;
-            }}
+            }
             Class<Crypt> clazz = (Class<Crypt>) cryptClass;
             if (clazz.isEnum()) {
                 Crypt[] constants = clazz.getEnumConstants();
